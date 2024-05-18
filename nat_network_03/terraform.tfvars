@@ -1,4 +1,4 @@
-# terraform.tfvars
+# nat_network_03/terraform.tfvars
 base_image = "/var/lib/libvirt/images/flatcar_image/flatcar_image/flatcar_production_qemu_image.img"
 vm_definitions = {
   "bootstrap1" = { cpus = 1, memory = 1024, ip = "10.17.4.20" },
