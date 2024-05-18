@@ -4,24 +4,27 @@ resource "libvirt_network" "kube_network_02" {
   addresses = ["10.17.3.0/24"]
 }
 
-# Verificar si el pool ya existe
-data "libvirt_pool" "existing_pool" {
-  name = var.cluster_name
+resource "null_resource" "check_pool" {
+  provisioner "local-exec" {
+    command = <<EOT
+      virsh pool-info ${var.cluster_name} >/dev/null 2>&1 || exit 1
+    EOT
+  }
 }
 
-# Crear el pool solo si no existe
 resource "libvirt_pool" "volumetmp" {
-  count = length(data.libvirt_pool.existing_pool.id) == 0 ? 1 : 0
-  name = var.cluster_name
-  type = "dir"
-  path = "/var/lib/libvirt/images/${var.cluster_name}"
+  count = null_resource.check_pool[0].id == "" ? 1 : 0
+  name  = var.cluster_name
+  type  = "dir"
+  path  = "/var/lib/libvirt/images/${var.cluster_name}"
 }
 
 resource "libvirt_volume" "rocky9_image" {
-  name   = "${var.cluster_name}-rocky9_image"
-  source = var.rocky9_image
-  pool   = data.libvirt_pool.existing_pool.id
-  format = "qcow2"
+  depends_on = [null_resource.check_pool]
+  name       = "${var.cluster_name}-rocky9_image"
+  source     = var.rocky9_image
+  pool       = var.cluster_name
+  format     = "qcow2"
 }
 
 data "template_file" "vm-configs" {
@@ -39,7 +42,7 @@ resource "libvirt_cloudinit_disk" "vm_cloudinit" {
   for_each = var.vm_rockylinux_definitions
 
   name      = "${each.key}_cloudinit.iso"
-  pool      = data.libvirt_pool.existing_pool.id
+  pool      = var.cluster_name
   user_data = data.template_file.vm-configs[each.key].rendered
 }
 
@@ -48,7 +51,7 @@ resource "libvirt_volume" "vm_disk" {
 
   name           = "${each.key}-${var.cluster_name}.qcow2"
   base_volume_id = libvirt_volume.rocky9_image.id
-  pool           = data.libvirt_pool.existing_pool.id
+  pool           = var.cluster_name
   format         = "qcow2"
 }
 
