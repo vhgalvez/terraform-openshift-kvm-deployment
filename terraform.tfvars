@@ -1,1 +1,0 @@
-cluster_name = "cluster_cefaslocalserver"
