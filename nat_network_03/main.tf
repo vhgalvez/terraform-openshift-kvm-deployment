@@ -1,4 +1,26 @@
 # nat_network_03/main.tf
+terraform {
+  required_version = ">= 0.13"
+  required_providers {
+    libvirt = {
+      source  = "dmacvicar/libvirt"
+      version = "0.7.1"
+    }
+    ct = {
+      source  = "poseidon/ct"
+      version = "0.10.0"
+    }
+    template = {
+      source = "hashicorp/template"
+      version = "~> 2.2.0"
+    }
+  }
+}
+
+provider "libvirt" {
+  uri = "qemu:///system"
+}
+
 resource "libvirt_network" "kube_network_03" {
   name      = "kube_network_03"
   mode      = "nat"
@@ -65,7 +87,7 @@ resource "libvirt_domain" "machine" {
   network_interface {
     network_id     = libvirt_network.kube_network_03.id
     wait_for_lease = true
-    addresses      = [each.value.ip] # Correctly refer to the IP
+    addresses      = [each.value.ip]
   }
 
   disk {

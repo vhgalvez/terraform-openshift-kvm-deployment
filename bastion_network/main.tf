@@ -21,16 +21,16 @@ resource "libvirt_network" "br0" {
   addresses = ["192.168.0.0/24"]
 }
 
-resource "libvirt_pool" "volumetmp_br0" {
-  name = "${var.cluster_name}_br0"
+resource "libvirt_pool" "volumetmp" {
+  name = var.cluster_name
   type = "dir"
-  path = "/var/lib/libvirt/images/${var.cluster_name}_br0"
+  path = "/var/lib/libvirt/images/${var.cluster_name}"
 }
 
 resource "libvirt_volume" "rocky9_image" {
   name   = "${var.cluster_name}-rocky9_image"
   source = var.rocky9_image
-  pool   = libvirt_pool.volumetmp_br0.name
+  pool   = libvirt_pool.volumetmp.name
   format = "qcow2"
 }
 
@@ -48,7 +48,7 @@ resource "libvirt_cloudinit_disk" "vm_cloudinit" {
   for_each = var.vm_rockylinux_definitions
 
   name      = "${each.key}_cloudinit.iso"
-  pool      = libvirt_pool.volumetmp_br0.name
+  pool      = libvirt_pool.volumetmp.name
   user_data = data.template_file.vm_configs[each.key].rendered
   network_config = templatefile("${path.module}/config/network-config.tpl", {
     ip      = each.value.ip
@@ -63,7 +63,7 @@ resource "libvirt_volume" "vm_disk" {
 
   name           = each.value.volume_name
   base_volume_id = libvirt_volume.rocky9_image.id
-  pool           = libvirt_pool.volumetmp_br0.name
+  pool           = each.value.volume_pool
   format         = each.value.volume_format
   size           = each.value.volume_size
 }
