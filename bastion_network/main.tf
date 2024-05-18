@@ -34,9 +34,29 @@ resource "libvirt_volume" "rocky9_image" {
   format = "qcow2"
 }
 
-# Otras configuraciones específicas para bastion_network
+data "template_file" "bastion_user_data" {
+  template = file("${path.module}/config/bastion1-user-data.tpl")
+  vars = {
+    ssh_keys = jsonencode(var.ssh_keys)
+    hostname = "bastion1"
+  }
+}
 
-# Ejemplo de dominio
+resource "libvirt_cloudinit_disk" "bastion" {
+  name           = "bastion1-cloudinit.iso"
+  pool           = libvirt_pool.volumetmp_bastion.name
+  user_data      = data.template_file.bastion_user_data.rendered
+  network_config = file("${path.module}/config/network-config.tpl")
+}
+
+resource "libvirt_volume" "vm_disk" {
+  name           = "bastion1_volume.qcow2"
+  base_volume_id = libvirt_volume.rocky9_image.id
+  pool           = libvirt_pool.volumetmp_bastion.name
+  format         = "qcow2"
+  size           = "32212254720" # 30GB
+}
+
 resource "libvirt_domain" "vm_bastion" {
   name   = "bastion1"
   memory = 2048
@@ -48,7 +68,7 @@ resource "libvirt_domain" "vm_bastion" {
   }
 
   disk {
-    volume_id = libvirt_volume.rocky9_image.id
+    volume_id = libvirt_volume.vm_disk.id
   }
 
   graphics {
@@ -57,4 +77,8 @@ resource "libvirt_domain" "vm_bastion" {
   }
 
   cloudinit = libvirt_cloudinit_disk.bastion.id
+}
+
+output "bastion_ip_address" {
+  value = libvirt_domain.vm_bastion.network_interface[0].addresses[0]
 }
