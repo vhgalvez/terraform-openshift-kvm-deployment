@@ -1,4 +1,3 @@
-# nat_network_02/main.tf
 terraform {
   required_version = "= 1.8.3"
   required_providers {
