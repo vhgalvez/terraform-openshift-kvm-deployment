@@ -18,22 +18,49 @@ resource "libvirt_volume" "rocky9_image" {
   format = "qcow2"
 }
 
-# Otras configuraciones específicas para nat_network_02
+data "template_file" "vm-configs" {
+  for_each = var.vm_rockylinux_definitions
 
-# Ejemplo de dominio
+  template = file("${path.module}/config/${each.key}-user-data.tpl")
+  vars = {
+    ssh_keys = jsonencode(var.ssh_keys),
+    hostname = each.key,
+    timezone = var.timezone
+  }
+}
+
+resource "libvirt_cloudinit_disk" "vm_cloudinit" {
+  for_each = var.vm_rockylinux_definitions
+
+  name      = "${each.key}_cloudinit.iso"
+  pool      = libvirt_pool.volumetmp_nat_02.name
+  user_data = data.template_file.vm-configs[each.key].rendered
+}
+
+resource "libvirt_volume" "vm_disk" {
+  for_each = var.vm_rockylinux_definitions
+
+  name           = "${each.key}-${var.cluster_name}.qcow2"
+  base_volume_id = libvirt_volume.rocky9_image.id
+  pool           = libvirt_pool.volumetmp_nat_02.name
+  format         = "qcow2"
+}
+
 resource "libvirt_domain" "vm_nat_02" {
-  name   = "freeipa1"
-  memory = 2048
-  vcpu   = 2
+  for_each = var.vm_rockylinux_definitions
+
+  name   = each.key
+  memory = each.value.domain_memory
+  vcpu   = each.value.cpus
 
   network_interface {
     network_id     = libvirt_network.kube_network_02.id
     wait_for_lease = true
-    addresses      = ["10.17.3.11"]
+    addresses      = [each.value.ip]
   }
 
   disk {
-    volume_id = libvirt_volume.rocky9_image.id
+    volume_id = libvirt_volume.vm_disk[each.key].id
   }
 
   graphics {
@@ -41,5 +68,13 @@ resource "libvirt_domain" "vm_nat_02" {
     listen_type = "address"
   }
 
-  cloudinit = libvirt_cloudinit_disk.freeipa1.id
+  cloudinit = libvirt_cloudinit_disk.vm_cloudinit[each.key].id
+
+  cpu {
+    mode = "host-passthrough"
+  }
+}
+
+output "ip_addresses" {
+  value = { for key, machine in libvirt_domain.vm_nat_02 : key => var.vm_rockylinux_definitions[key].ip }
 }
