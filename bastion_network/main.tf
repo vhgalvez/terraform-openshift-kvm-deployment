@@ -1,5 +1,6 @@
+# bastion_network/main.tf
+
 terraform {
-  required_version = "= 1.8.3"
   required_providers {
     libvirt = {
       source  = "dmacvicar/libvirt"
@@ -13,66 +14,33 @@ provider "libvirt" {
 }
 
 resource "libvirt_network" "br0" {
-  name      = var.rocky9_network_name
+  name      = "br0"
   mode      = "bridge"
   bridge    = "br0"
   autostart = true
   addresses = ["192.168.0.0/24"]
 }
 
-resource "libvirt_pool" "volumetmp" {
-  name = var.cluster_name
+resource "libvirt_pool" "volumetmp_bastion" {
+  name = "${var.cluster_name}_bastion"
   type = "dir"
-  path = "/var/lib/libvirt/images/${var.cluster_name}"
+  path = "/var/lib/libvirt/images/${var.cluster_name}_bastion"
 }
 
 resource "libvirt_volume" "rocky9_image" {
-  name   = "${var.cluster_name}-rocky9_image"
+  name   = "${var.cluster_name}_rocky9_image"
   source = var.rocky9_image
-  pool   = libvirt_pool.volumetmp.name
+  pool   = libvirt_pool.volumetmp_bastion.name
   format = "qcow2"
 }
 
-data "template_file" "vm_configs" {
-  for_each = var.vm_rockylinux_definitions
+# Otras configuraciones específicas para bastion_network
 
-  template = file("${path.module}/config/${each.key}-user-data.tpl")
-  vars = {
-    ssh_keys = jsonencode(var.ssh_keys)
-    hostname = each.value.hostname
-  }
-}
-
-resource "libvirt_cloudinit_disk" "vm_cloudinit" {
-  for_each = var.vm_rockylinux_definitions
-
-  name      = "${each.key}_cloudinit.iso"
-  pool      = libvirt_pool.volumetmp.name
-  user_data = data.template_file.vm_configs[each.key].rendered
-  network_config = templatefile("${path.module}/config/network-config.tpl", {
-    ip      = each.value.ip
-    gateway = each.value.gateway
-    dns1    = each.value.dns1
-    dns2    = each.value.dns2
-  })
-}
-
-resource "libvirt_volume" "vm_disk" {
-  for_each = var.vm_rockylinux_definitions
-
-  name           = each.value.volume_name
-  base_volume_id = libvirt_volume.rocky9_image.id
-  pool           = each.value.volume_pool
-  format         = each.value.volume_format
-  size           = each.value.volume_size
-}
-
-resource "libvirt_domain" "vm" {
-  for_each = var.vm_rockylinux_definitions
-
-  name   = each.key
-  memory = each.value.memory
-  vcpu   = each.value.cpus
+# Ejemplo de dominio
+resource "libvirt_domain" "vm_bastion" {
+  name   = "bastion1"
+  memory = 2048
+  vcpu   = 2
 
   network_interface {
     network_id = libvirt_network.br0.id
@@ -80,33 +48,13 @@ resource "libvirt_domain" "vm" {
   }
 
   disk {
-    volume_id = libvirt_volume.vm_disk[each.key].id
+    volume_id = libvirt_volume.rocky9_image.id
   }
-
-  cloudinit = libvirt_cloudinit_disk.vm_cloudinit[each.key].id
 
   graphics {
     type        = "vnc"
     listen_type = "address"
   }
 
-  console {
-    type        = "pty"
-    target_type = "serial"
-    target_port = "0"
-  }
-
-  console {
-    type        = "pty"
-    target_type = "virtio"
-    target_port = "1"
-  }
-
-  cpu {
-    mode = "host-passthrough"
-  }
-}
-
-output "ip_addresses" {
-  value = { for key, machine in libvirt_domain.vm : key => machine.network_interface[0].addresses[0] if length(machine.network_interface[0].addresses) > 0 }
+  cloudinit = libvirt_cloudinit_disk.bastion.id
 }

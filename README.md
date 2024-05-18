@@ -1,3 +1,27 @@
+Ejecución Individual de cada main.tf
+Inicializar Terraform para bastion_network:
+
+bash
+Copiar código
+cd bastion_network
+sudo terraform init --upgrade
+sudo terraform apply
+Inicializar Terraform para nat_network_02:
+
+bash
+Copiar código
+cd ../nat_network_02
+sudo terraform init --upgrade
+sudo terraform apply
+Inicializar Terraform para nat_network_03:
+
+bash
+Copiar código
+cd ../nat_network_03
+sudo terraform init --upgrade
+sudo terraform apply
+De esta manera, cada subproyecto es independiente y puede ejecutarse sin problemas de conflictos de nombres.
+
 # Hardware del Servidor
 
 - **Modelo**: ProLiant DL380 G7
@@ -256,3 +280,6 @@ resource "libvirt_network" "kube_network_03" {
 | k8s       | 192.168.120.1   | 255.255.255.0   | 192.168.120.255  | Interfaz para Kubernetes                 | Solo configuración, no tráfico    |
 | lo        | 127.0.0.1       | 255.0.0.0       | -                | Loopback, interfaz de red virtual        | Tráfico local solo                |
 | virbr0    | 192.168.122.1   | 255.255.255.0   | 192.168.122.255  | Interfaz de red virtual por defecto      | Usado típicamente por KVM         |
+
+
+
