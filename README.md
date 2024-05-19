@@ -440,7 +440,8 @@ resource "libvirt_network" "kube_network_03" {
 
 ## Capturas de Pantalla
 
-![sudo virsh list --](complemento/image/mv_virsh_list.png" width="200" height="150")
+![sudo virsh list --](complemento/image/virsh_list.png" width="200" height="150")
 
-## Capturas de Pantalla
-![Servidor](complemento/image/mv_server.png" width="200" height="150")
+## Servidor
+
+![Servidor](complemento/image/server.png" width="200" height="150")
