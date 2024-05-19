@@ -394,13 +394,9 @@ Estas interfaces se utilizan para la comunicación y conectividad de la red, inc
 | kube_network_03 | `worker2`    | 10.17.4.25   | Ejecución de aplicaciones  | (Virtual - NAT) |
 | kube_network_03 | `worker3`    | 10.17.4.26   | Ejecución de aplicaciones  | (Virtual - NAT) |
 
-### Recursos Terraform para la configuración de redes
 
-
-## Capturas de Pantalla
+## Maquinas Virtuales funcionando
 
 ![sudo virsh list --](https://github.com/vhgalvez/terraform-openshift-kvm-deployment/blob/4f16ea5ee7688d1d5b3a1611792ffaca2526c88b/complemento/image/mv_server.png "width=200 height=150")
 
-## Servidor
-
-![Servidor](https://github.com/vhgalvez/terraform-openshift-kvm-deployment/blob/4f16ea5ee7688d1d5b3a1611792ffaca2526c88b/complemento/image/mv_virsh_list.png"width=200 height=150")
+![Servidor](https://github.com/vhgalvez/terraform-openshift-kvm-deployment/blob/5f378e8f80f5a90654b18568974b810bcca779bf/complemento/image/mv_virsh_list.png "width=200 height=150")
