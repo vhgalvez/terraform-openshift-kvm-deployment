@@ -87,7 +87,8 @@ Para cualquier duda o problema, por favor abra un issue en el repositorio o cont
 
 ---
 
-**Mantenedor del Proyecto:** [Tu Nombre](https://github.com/tu-usuario)
+**Mantenedor del Proyecto:** [Victor Galvez](https://github.com/vgalvez)
+
 # Hardware del Servidor
 
 - **Modelo**: ProLiant DL380 G7
