@@ -397,44 +397,6 @@ Estas interfaces se utilizan para la comunicación y conectividad de la red, inc
 ### Recursos Terraform para la configuración de redes
 
 
-```hcl
-# Red br0 - Bridge Network - Rocky Linux 9.3
-resource "libvirt_network" "br0" {
-  name      = var.rocky9_network_name
-  mode      = "bridge"
-  bridge    = "br0"
-  autostart = true
-  addresses = ["192.168.0.0/24"]
-}
-
-# Red kube_network_02 - NAT Network - Rocky Linux 9.3
-resource "libvirt_network" "kube_network_02" {
-  name      = "kube_network_02"
-  mode      = "nat"
-  addresses = ["10.17.3.0/24"]
-}
-
-# Red kube_network_03 - NAT Network - Flatcar Container Linux
-resource "libvirt_network" "kube_network_03" {
-  name      = "kube_network_03"
-  mode      = "nat"
-  addresses = ["10.17.4.0/24"]
-}
-```
-
-## Interfaces Físicas de Red y Funcionalidad
-
-| Interface | IP Address    | Netmask       | Broadcast       | Description                               | Additional Info                |
-| --------- | ------------- | ------------- | --------------- | ----------------------------------------- | ------------------------------ |
-| enp3s0f0  | 192.168.0.15  | 255.255.255.0 | 192.168.0.255   | Interfaz general del servidor             | -                              |
-| enp3s0f1  | 192.168.0.16  | 255.255.255.0 | 192.168.0.255   | Utilizada para Bridge en el nodo bastion1 | -                              |
-| enp4s0f0  | 192.168.0.20  | 255.255.255.0 | 192.168.0.255   | Otra interfaz general del servidor        | -                              |
-| enp4s0f1  | 192.168.0.18  | 255.255.255.0 | 192.168.0.255   | Reserva o conexión redundante             | -                              |
-| k8s       | 192.168.120.1 | 255.255.255.0 | 192.168.120.255 | Interfaz para Kubernetes                  | Solo configuración, no tráfico |
-| lo        | 127.0.0.1     | 255.0.0.0     | -               | Loopback, interfaz de red virtual         | Tráfico local solo             |
-| virbr0    | 192.168.122.1 | 255.255.255.0 | 192.168.122.255 | Interfaz de red virtual por defecto       | Usado típicamente por KVM      |
-
-
 
 
 
