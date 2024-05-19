@@ -87,7 +87,7 @@ Para cualquier duda o problema, por favor abra un issue en el repositorio o cont
 
 ---
 
-**Mantenedor del Proyecto:** [Victor Galvez](https://github.com/vgalvez)
+**Mantenedor del Proyecto:** [Victor Galvez](https://github.com/vhgalvez)
 
 # Hardware del Servidor
 
