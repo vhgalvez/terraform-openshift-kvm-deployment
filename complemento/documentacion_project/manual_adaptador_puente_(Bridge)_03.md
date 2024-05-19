@@ -58,11 +58,37 @@ sudo brctl show
 
 Este método implica editar directamente los archivos de configuración de NetworkManager.
 
-### Paso 1: Crear el archivo de configuración del puente br0
+### Paso 1: Generar UUIDs para las conexiones
+
+Antes de crear los archivos de configuración, es útil generar UUIDs únicos para cada conexión. Esto se puede hacer usando el comando `uuidgen` en la terminal. Ejecuta este comando dos veces para obtener dos UUIDs diferentes, uno para el puente y otro para la interfaz esclava:
+
+```bash
+uuidgen  # Genera un UUID para el puente br0
+uuidgen  # Genera un UUID para la interfaz esclava enp3s0f0
+```
+
+### Paso 2: Crear el archivo de configuración del puente br0
+
+Usa el UUID generado para crear un archivo en `/etc/NetworkManager/system-connections/` con el nombre `br0.nmconnection` y el siguiente contenido:
 
 
-Crea un archivo en `/etc/NetworkManager/system-connections/` con el nombre `br0.nmconnection` y el siguiente contenido:
 
+```ini
+[connection]
+id=br0
+uuid=<UUID-GENERADO-PARA-BR0>  # Reemplaza <UUID-GENERADO-PARA-BR0> con el UUID generado en el paso 1
+type=bridge
+interface-name=br0
+
+[ipv4]
+method=auto
+
+[ipv6]
+method=auto
+addr-gen-mode=default
+```
+- **ejemplo:**
+  
 ```ini
 [connection]
 id=br0
@@ -78,10 +104,23 @@ method=auto
 addr-gen-mode=default
 ```
 
-### Paso 2: Crear el archivo de configuración para la interfaz esclava
+### Paso 3: Crear el archivo de configuración para la interfaz esclava
 
-Crea otro archivo en `/etc/NetworkManager/system-connections/` con el nombre `bridge-slave-enp3s0f0.nmconnection` y el siguiente contenido:
+Usa el segundo UUID generado para crear otro archivo en `/etc/NetworkManager/system-connections/` con el nombre `bridge-slave-enp3s0f0.nmconnection` y el siguiente contenido:
 
+
+```ini
+[connection]
+id=bridge-slave-enp3s0f0
+uuid=<UUID-GENERADO-PARA-ESCLAVA>  # Reemplaza <UUID-GENERADO-PARA-ESCLAVA> con el UUID generado en el paso 1
+type=ethernet
+interface-name=enp3s0f0
+master=br0
+slave-type=bridge
+```
+
+
+- **ejemplo:**
 
 ```ini
 [connection]
@@ -93,7 +132,10 @@ master=br0
 slave-type=bridge
 ```
 
-### Paso 3: Reiniciar NetworkManager
+
+
+
+### Paso 4: Reiniciar NetworkManager
 
 Para aplicar las configuraciones, reinicia NetworkManager:
 
@@ -102,8 +144,23 @@ Para aplicar las configuraciones, reinicia NetworkManager:
 sudo systemctl restart NetworkManager
 ```
 
-### Paso 4: Verificar el estado
+### Paso 5: Verificar el estado
 
 Finalmente, verifica el estado de las interfaces y el puente con los mismos comandos utilizados en el método 1.
 
 Ambos métodos son efectivos para configurar un adaptador puente en Linux, y la elección entre uno u otro puede depender de si prefieres una solución de línea de comandos o trabajar directamente con archivos de configuración.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
