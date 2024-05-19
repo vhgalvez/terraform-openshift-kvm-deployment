@@ -1,3 +1,4 @@
+
 Documentación Técnica para Configuración de Comunicación entre Redes NAT y una Red Bridge en KVM
 Este documento proporciona una guía detallada sobre cómo configurar la comunicación entre redes NAT y una red puente (bridge) en un entorno KVM. La configuración se realiza en un servidor KVM físico y sus máquinas virtuales (VMs).
 
