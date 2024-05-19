@@ -403,4 +403,4 @@ Estas interfaces se utilizan para la comunicación y conectividad de la red, inc
 
 ## Servidor
 
-![Servidor](/complemento/image/server.png "width=200 height=150")
+![Servidor](https://github.com/vhgalvez/terraform-openshift-kvm-deployment/blob/main/complemento/image/mv_server.png"width=200 height=150")
