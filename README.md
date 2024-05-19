@@ -399,8 +399,8 @@ Estas interfaces se utilizan para la comunicación y conectividad de la red, inc
 
 ## Capturas de Pantalla
 
-![sudo virsh list --](/complemento/image/virsh_list.png "width=200 height=150")
+![sudo virsh list --](https://github.com/vhgalvez/terraform-openshift-kvm-deployment/blob/4f16ea5ee7688d1d5b3a1611792ffaca2526c88b/complemento/image/mv_server.png "width=200 height=150")
 
 ## Servidor
 
-![Servidor](https://github.com/vhgalvez/terraform-openshift-kvm-deployment/blob/main/complemento/image/mv_server.png"width=200 height=150")
+![Servidor](https://github.com/vhgalvez/terraform-openshift-kvm-deployment/blob/4f16ea5ee7688d1d5b3a1611792ffaca2526c88b/complemento/image/mv_virsh_list.png"width=200 height=150")
