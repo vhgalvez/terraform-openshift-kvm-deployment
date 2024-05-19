@@ -397,13 +397,10 @@ Estas interfaces se utilizan para la comunicación y conectividad de la red, inc
 ### Recursos Terraform para la configuración de redes
 
 
-
-
-
 ## Capturas de Pantalla
 
-![sudo virsh list --](complemento/image/virsh_list.png "width=200 height=150")
+![sudo virsh list --](/complemento/image/virsh_list.png "width=200 height=150")
 
 ## Servidor
 
-![Servidor](complemento/image/server.png "width=200 height=150")
+![Servidor](/complemento/image/server.png "width=200 height=150")
