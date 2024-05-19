@@ -142,3 +142,47 @@ sudo systemctl restart NetworkManager
 Finalmente, verifica el estado de las interfaces y el puente con los mismos comandos utilizados en el método 1.
 
 Ambos métodos son efectivos para configurar un adaptador puente en Linux, y la elección entre uno u otro puede depender de si prefieres una solución de línea de comandos o trabajar directamente con archivos de configuración.
+
+
+
+enp3s0f0
+
+```ini
+[connection]
+id=enp3s0f0
+uuid=92822580-241e-40ec-9f17-55649b2b0df3
+type=ethernet
+interface-name=enp3s0f0
+
+[ethernet]
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+```
+
+
+```ini
+[connection]
+id=enp3s0f1
+uuid=8a98ecd0-be84-4f60-9119-cf921e6c26f2
+type=ethernet
+interface-name=enp3s0f1
+
+[ethernet]
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]
+
+```
