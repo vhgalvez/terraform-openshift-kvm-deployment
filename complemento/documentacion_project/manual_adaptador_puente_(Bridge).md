@@ -94,4 +94,3 @@ nmcli device status
 ip addr show br0
 sudo brctl show
 ```
-
