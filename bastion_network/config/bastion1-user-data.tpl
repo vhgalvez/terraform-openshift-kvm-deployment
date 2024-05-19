@@ -42,3 +42,5 @@ runcmd:
   - ["dnf", "install", "-y", "firewalld"]
   - ["systemctl", "enable", "--now", "firewalld"]
   - ["systemctl", "restart", "NetworkManager.service"]
+
+timezone: ${timezone}
