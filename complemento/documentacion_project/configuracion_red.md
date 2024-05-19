@@ -33,6 +33,7 @@ sudo ip route add 10.17.3.0/24 via 192.168.0.1
 sudo ip route add 10.17.4.0/24 via 192.168.0.1
 ```
 
+
 ## 2. Acceso HTTPS y Conexión VPN Segura
 
 Para asegurar el acceso HTTPS y una conexión segura para la gestión del servidor y el clúster, configuraremos un servidor VPN utilizando WireGuard y habilitaremos certificados SSL/TLS para servicios expuestos.
