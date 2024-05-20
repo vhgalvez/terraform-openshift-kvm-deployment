@@ -230,3 +230,19 @@ PrivateKey = <server-private-key>
 PublicKey = <client-public-key>
 AllowedIPs = 10.0.0.2/32
 Certificados SSL/TLS: Utiliza certificados SSL/TLS para asegurar la comunicación HTTPS en los servicios expuestos (por ejemplo, Traefik para balanceo de carga).
+
+
+
+
+ip route show
+
+
+nmcli device reapply enp4s0f0
+nmcli device reapply enp3s0f1
+nmcli device reapply enp3s0f0
+nmcli device reapply enp4s0f1
+
+
+sudo ip route del default via 192.168.0.1 dev enp3s0f1
+sudo ip route del default via 192.168.0.1 dev enp3s0f0
+sudo ip route del default via 192.168.0.1 dev enp4s0f1

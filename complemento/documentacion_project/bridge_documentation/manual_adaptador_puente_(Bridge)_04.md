@@ -137,3 +137,7 @@ resource "libvirt_network" "br0" {
   addresses = ["192.168.0.0/24"]
 }
 ```
+
+
+sudo systemctl restart NetworkManager
+sudo nmcli connection up bridge-slave-enp3s0f0
