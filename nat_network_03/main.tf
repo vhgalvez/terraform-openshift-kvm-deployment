@@ -25,6 +25,7 @@ provider "libvirt" {
 resource "libvirt_network" "kube_network_03" {
   name      = "kube_network_03"
   mode      = "nat"
+  autostart = true
   addresses = ["10.17.4.0/24"]
 }
 

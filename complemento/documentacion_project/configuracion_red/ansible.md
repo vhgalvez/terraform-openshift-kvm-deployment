@@ -113,6 +113,7 @@ Crea un playbook separado para instalar Python en las máquinas virtuales:
 - name: Instalar Python en las máquinas virtuales
   hosts: all
   become: yes
+  gather_facts: no
   tasks:
     - name: Instalar Python en Flatcar Container Linux
       raw: |
@@ -127,5 +128,5 @@ Crea un playbook separado para instalar Python en las máquinas virtuales:
 Ejecuta este playbook para instalar Python en todas las máquinas virtuales:
 
 ```bash
-ansible-playbook -i /etc/ansible/hosts /etc/ansible/install_python.yml
+sudoansible-playbook -i /etc/ansible/hosts /etc/ansible/install_python.yml
 ```

@@ -1,9 +1,9 @@
 # /etc/ansible/install_python.yml
-
 ---
 - name: Instalar Python en las máquinas virtuales
   hosts: all
   become: yes
+  gather_facts: no
   tasks:
     - name: Instalar Python en Flatcar Container Linux
       raw: |

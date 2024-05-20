@@ -1,9 +1,10 @@
 # /etc/ansible/configurar_rutas.yml
-
 ---
 - name: Configurar rutas estáticas en las máquinas virtuales
   hosts: all
   become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: Agregar ruta estática a la red bridge para kube_network_02
       ansible.builtin.command:
@@ -11,6 +12,7 @@
       when: inventory_hostname in groups['kube_network_02']
       vars:
         gateway: 10.17.3.1
+      ignore_errors: yes
 
     - name: Agregar ruta estática a la red bridge para kube_network_03
       ansible.builtin.command:
@@ -18,3 +20,4 @@
       when: inventory_hostname in groups['kube_network_03']
       vars:
         gateway: 10.17.4.1
+      ignore_errors: yes
