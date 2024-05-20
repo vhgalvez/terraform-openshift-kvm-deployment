@@ -36,6 +36,8 @@ worker3 ansible_host=10.17.4.26
 [all:vars]
 ansible_user=core
 ansible_ssh_private_key_file=/root/.ssh/cluster_openshift/key_cluster_openshift/id_rsa_key_cluster_openshift
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
 ```
 
 ## Paso 3: Crear el Playbook de Ansible
@@ -50,6 +52,8 @@ Crea un archivo llamado `configurar_rutas.yml` con el siguiente contenido:
 - name: Configurar rutas estáticas en las máquinas virtuales
   hosts: all
   become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: Agregar ruta estática a la red bridge para kube_network_02
       ansible.builtin.command:
@@ -57,6 +61,7 @@ Crea un archivo llamado `configurar_rutas.yml` con el siguiente contenido:
       when: inventory_hostname in groups['kube_network_02']
       vars:
         gateway: 10.17.3.1
+      ignore_errors: yes
 
     - name: Agregar ruta estática a la red bridge para kube_network_03
       ansible.builtin.command:
@@ -64,6 +69,7 @@ Crea un archivo llamado `configurar_rutas.yml` con el siguiente contenido:
       when: inventory_hostname in groups['kube_network_03']
       vars:
         gateway: 10.17.4.1
+      ignore_errors: yes
 ```
 
 ## Paso 4: Ejecutar el Playbook
@@ -74,6 +80,11 @@ Ejecuta el playbook con el siguiente comando desde el servidor ProLiant DL380 G7
 ansible-playbook -i /etc/ansible/hosts /etc/ansible/configurar_rutas.yml
 ```
 
+## Paso 5: dar permisos a la clave privada
+
+```bash
+sudo chmod 600 /root/.ssh/cluster_openshift/key_cluster_openshift/id_rsa_key_cluster_openshift
+```
 
 ## Explicación
 
@@ -87,3 +98,34 @@ ansible-playbook -i /etc/ansible/hosts /etc/ansible/configurar_rutas.yml
 - Verifica que el usuario y la clave SSH sean correctos. El usuario core y la clave privada /root/.ssh/cluster_openshift/key_cluster_openshift/id_rsa_key_cluster_openshift deben ser correctos y tener permisos adecuados.
 - Si encuentras problemas de conectividad o permisos, verifica los logs de Ansible y ajusta las configuraciones según sea necesario.
 Esta configuración de Ansible es más escalable y eficiente, ya que permite aplicar configuraciones en múltiples máquinas virtuales en paralelo, asegurando consistencia y ahorrando tiempo.
+
+
+## Instalar Python en las Máquinas Virtuales
+
+Para que Ansible funcione correctamente, las máquinas virtuales necesitan tener Python instalado. Si estás utilizando Flatcar Container Linux (anteriormente CoreOS), deberás instalar Python en ellas.
+
+Crea un playbook separado para instalar Python en las máquinas virtuales:
+
+```yaml
+# /etc/ansible/install_python.yml
+
+---
+- name: Instalar Python en las máquinas virtuales
+  hosts: all
+  become: yes
+  tasks:
+    - name: Instalar Python en Flatcar Container Linux
+      raw: |
+        if [ ! -f /usr/bin/python ]; then
+          curl -O https://bootstrap.pypa.io/get-pip.py
+          sudo python3 get-pip.py
+          sudo pip install ansible
+        fi
+      changed_when: false
+```
+
+Ejecuta este playbook para instalar Python en todas las máquinas virtuales:
+
+```bash
+ansible-playbook -i /etc/ansible/hosts /etc/ansible/install_python.yml
+```

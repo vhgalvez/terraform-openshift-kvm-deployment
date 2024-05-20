@@ -1,0 +1,15 @@
+# /etc/ansible/install_python.yml
+
+---
+- name: Instalar Python en las máquinas virtuales
+  hosts: all
+  become: yes
+  tasks:
+    - name: Instalar Python en Flatcar Container Linux
+      raw: |
+        if [ ! -f /usr/bin/python ]; then
+          curl -O https://bootstrap.pypa.io/get-pip.py
+          sudo python3 get-pip.py
+          sudo pip install ansible
+        fi
+      changed_when: false
