@@ -11,7 +11,6 @@ sudo dnf install epel-release -y
 sudo dnf install ansible -y
 ```
 
-
 ## Paso 2: Configurar el Inventario de Ansible
 
 Crea un archivo de inventario llamado hosts que contenga la información de las máquinas virtuales. Puedes crear este archivo en el directorio /etc/ansible o en un directorio de tu elección.
@@ -37,10 +36,48 @@ worker3 ansible_host=10.17.4.26
 ansible_user=core
 ansible_ssh_private_key_file=/root/.ssh/cluster_openshift/key_cluster_openshift/id_rsa_key_cluster_openshift
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-
 ```
 
-## Paso 3: Crear el Playbook de Ansible
+## Paso 3: Dar Permisos a la Clave Privada
+
+```bash
+sudo chmod 600 /root/.ssh/cluster_openshift/key_cluster_openshift/id_rsa_key_cluster_openshift
+```
+
+## Paso 4: Crear el Playbook para Instalar Python
+
+Para que Ansible funcione correctamente, las máquinas virtuales necesitan tener Python instalado. Si estás utilizando Flatcar Container Linux (anteriormente CoreOS), deberás instalar Python en ellas.
+
+Crea un archivo llamado `install_python.yml` con el siguiente contenido:
+
+```yaml
+# /etc/ansible/install_python.yml
+
+---
+- name: Instalar Python en las máquinas virtuales
+  hosts: all
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: Instalar Python en Flatcar Container Linux
+      raw: |
+        if [ ! -f /usr/bin/python ]; then
+          curl -O https://bootstrap.pypa.io/get-pip.py
+          sudo python3 get-pip.py
+          sudo pip install ansible
+        fi
+      changed_when: false
+```
+
+
+Ejecuta este playbook para instalar Python en todas las máquinas virtuales:
+
+```bash
+sudo ansible-playbook -i /etc/ansible/hosts /etc/ansible/install_python.yml
+```
+
+## Paso 5: Crear el Playbook de Ansible para Configurar Rutas
+
 
 Crea un archivo llamado `configurar_rutas.yml` con el siguiente contenido:
 
@@ -71,6 +108,41 @@ Crea un archivo llamado `configurar_rutas.yml` con el siguiente contenido:
         gateway: 10.17.4.1
       ignore_errors: yes
 ```
+
+
+## Paso 6: Ejecutar el Playbook para Configurar Rutas
+
+Ejecuta el playbook con el siguiente comando desde el servidor ProLiant DL380 G7:
+
+
+```bash
+sudo ansible-playbook -i /etc/ansible/hosts /etc/ansible/configurar_rutas.yml
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Paso 4: Ejecutar el Playbook
 
@@ -129,4 +201,45 @@ Ejecuta este playbook para instalar Python en todas las máquinas virtuales:
 
 ```bash
 sudoansible-playbook -i /etc/ansible/hosts /etc/ansible/install_python.yml
+```
+
+## Paso 5: Crear el Playbook de Ansible para Configurar Rutas
+
+Crea un archivo llamado `configurar_rutas.yml` con el siguiente contenido:
+
+
+```yaml
+# /etc/ansible/configurar_rutas.yml
+
+---
+- name: Configurar rutas estáticas en las máquinas virtuales
+  hosts: all
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Agregar ruta estática a la red bridge para kube_network_02
+      ansible.builtin.command:
+        cmd: ip route add 192.168.0.0/24 via {{ gateway }}
+      when: inventory_hostname in groups['kube_network_02']
+      vars:
+        gateway: 10.17.3.1
+      ignore_errors: yes
+
+    - name: Agregar ruta estática a la red bridge para kube_network_03
+      ansible.builtin.command:
+        cmd: ip route add 192.168.0.0/24 via {{ gateway }}
+      when: inventory_hostname in groups['kube_network_03']
+      vars:
+        gateway: 10.17.4.1
+      ignore_errors: yes
+```
+
+## Paso 6: Ejecutar el Playbook para Configurar Rutas
+
+Ejecuta el playbook con el siguiente comando desde el servidor ProLiant DL380 G7:
+
+
+```bash
+ansible-playbook -i /etc/ansible/hosts /etc/ansible/configurar_rutas.yml
 ```
