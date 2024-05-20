@@ -138,6 +138,7 @@ Ejecuta el playbook con el siguiente comando desde el servidor ProLiant DL380 G7
 ```bash
 sudo ansible-playbook -i /etc/ansible/hosts /etc/ansible/configurar_rutas.yml
 ```
+
 ## Explicación
 
 - **Inventario de Ansible (hosts):** Define los grupos de hosts (kube_network_02 y kube_network_03) y especifica las direcciones IP y las variables necesarias para la conexión SSH.
