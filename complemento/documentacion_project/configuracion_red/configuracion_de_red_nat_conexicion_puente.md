@@ -263,8 +263,11 @@ Copiar código
 sudo ip route add 192.168.0.0/24 via 10.17.3.1
 En las VMs de nat_network_03:
 sh
+
 Copiar código
-sudo ip route add 192.168.0.0/24 via 10.17.4.1
+
+sudo ip route add 192.168.0.0/24 via 10.17.4.1.
+
 Paso 5: Verificar la Conectividad
 Finalmente, verifica la conectividad entre las máquinas virtuales en las redes NAT y la red puente mediante ping o cualquier otra herramienta de red:
 

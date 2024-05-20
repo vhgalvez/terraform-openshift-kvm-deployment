@@ -50,6 +50,26 @@ Para que Ansible funcione correctamente, las máquinas virtuales necesitan tener
 
 Crea un archivo llamado `install_python.yml` con el siguiente contenido:
 
+
+Crear el Script de Instalación
+
+Primero, vamos a crear un script que instale Python y pip en Flatcar. Guárdalo en `/etc/ansible/install_python.sh`
+
+
+```bash
+
+# /etc/ansible/install_python.sh
+
+#!/bin/bash
+
+if [ ! -f /usr/bin/python3 ]; then
+  curl -O https://bootstrap.pypa.io/get-pip.py
+  sudo bash get-pip.py
+  sudo pip install ansible
+fi
+```
+
+
 ```yaml
 # /etc/ansible/install_python.yml
 
