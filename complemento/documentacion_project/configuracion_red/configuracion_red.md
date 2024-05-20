@@ -175,3 +175,5 @@ ipa dnsrecord-find example.com
    
 Este documento proporciona una guía completa para configurar la comunicación entre redes NAT, acceso HTTPS seguro, conexión VPN utilizando WireGuard, y la configuración de un servidor DNS utilizando FreeIPA. Con estos pasos, podrás asegurar la comunicación eficiente y segura dentro de tu infraestructura de red y clúster.
 
+
+

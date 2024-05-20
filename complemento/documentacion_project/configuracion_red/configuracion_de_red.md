@@ -256,3 +256,18 @@ sudo ip route add 192.168.0.0/24 via 10.17.4.1
 ```bash
 sudo ip route add 192.168.0.0/24 via 10.17.4.1
 ```
+
+
+Este script utiliza SSH para conectarse a cada máquina virtual y agregar la ruta estática correspondiente. Asegúrate de que las VMs sean accesibles por SSH y de que tengas las claves SSH configuradas adecuadamente.
+
+Guarda este script en un archivo, por ejemplo configurar_rutas.sh, y dale permisos de ejecución:
+
+bash
+Copiar código
+chmod +x configurar_rutas.sh
+Luego, puedes ejecutar el script:
+
+bash
+Copiar código
+./configurar_rutas.sh
+Esto configurará las rutas necesarias en todas las máquinas virtuales de forma automática.
