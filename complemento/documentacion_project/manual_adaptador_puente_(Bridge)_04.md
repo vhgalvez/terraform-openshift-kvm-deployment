@@ -125,6 +125,7 @@ Finalmente, verifica el estado de las interfaces y el puente con los mismos coma
 
 Ambos métodos son efectivos para configurar un adaptador puente en Linux, y la elección entre uno u otro puede depender de si prefieres una solución de línea de comandos o trabajar directamente con archivos de configuración.
 
+brctl show
 
 
 ```hcl
