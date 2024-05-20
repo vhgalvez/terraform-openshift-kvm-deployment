@@ -13,6 +13,7 @@ sudo dnf install ansible -y
 
 
 ## Paso 2: Configurar el Inventario de Ansible
+
 Crea un archivo de inventario llamado hosts que contenga la información de las máquinas virtuales. Puedes crear este archivo en el directorio /etc/ansible o en un directorio de tu elección.
 
 ```ini
