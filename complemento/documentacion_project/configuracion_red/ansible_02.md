@@ -66,6 +66,7 @@ Copiar código
         gateway: 10.17.4.1
 Paso 3: Ejecutar el Playbook para Instalar Python
 Ejecuta el playbook para instalar Python en todas las máquinas virtuales:
+sudo chmod +x /etc/ansible/install_python.sh
 
 bash
 Copiar código
