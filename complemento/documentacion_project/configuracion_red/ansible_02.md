@@ -224,3 +224,6 @@ bash
 Copiar código
 sudo ansible-playbook -i /etc/ansible/hosts /etc/ansible/configurar_rutas.yml
 Siguiendo estos pasos, deberías poder instalar Python y configurar las rutas estáticas en tus máquinas virtuales utilizando Ansible.
+
+
+sudo ansible-playbook -i /etc/ansible/ansible-network-setup-cluster-openshift/hosts /etc/ansible/ansible-network-setup-cluster-openshift/install_python.yml
