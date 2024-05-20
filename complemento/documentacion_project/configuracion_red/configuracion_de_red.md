@@ -82,7 +82,13 @@ sudo iptables-save | sudo tee /etc/iptables/rules.v4
 
 Opción 1: Usar un Script de Inicio
 
+```bash
+sudo mkdir -p /etc/network/if-pre-up.d/
+```
+
 Crea un script de inicio, por ejemplo, /etc/network/if-pre-up.d/iptables:
+
+Si los directorios `/etc/network/if-pre-up.d/` no existen, créalos con el siguiente comando:
 
 ```bash
 sudo nano /etc/network/if-pre-up.d/iptables
@@ -101,7 +107,7 @@ Guarda el archivo y hazlo ejecutable:
 sudo chmod +x /etc/network/if-pre-up.d/iptables
 ```
 
-Opción 2: Usar un Servicio de iptables
+#### Opción 2: Usar un Servicio de iptables
 
 Crea un archivo de servicio para iptables:
 
@@ -183,3 +189,70 @@ Siguiendo estos pasos, podrás establecer comunicación entre tus redes NAT y la
 Para cualquier duda o problema, por favor, abre un issue en el repositorio o contacta al mantenedor del proyecto.
 
 Mantenedor del Proyecto: Victor Galvez
+
+
+## kube_network_02
+
+- freeipa1
+
+```bash
+sudo ip route add 192.168.0.0/24 via 10.17.3.1
+```
+
+## kube_network_02
+
+- load_balancer1
+
+```bash
+sudo ip route add 192.168.0.0/24 via 10.17.3.1
+```
+
+- postgresql1
+
+```bash
+sudo ip route add 192.168.0.0/24 via 10.17.3.1
+```
+
+## kube_network_03
+
+- bootstrap1
+
+```bash
+sudo ip route add 192.168.0.0/24 via 10.17.4.1
+```
+
+- master1
+
+```bash
+sudo ip route add 192.168.0.0/24 via 10.17.4.1
+```
+
+- master2
+
+```bash
+sudo ip route add 192.168.0.0/24 via 10.17.4.1
+```
+
+- master3
+
+```bash
+sudo ip route add 192.168.0.0/24 via 10.17.4.1
+```
+
+- worker1
+
+```bash
+sudo ip route add 192.168.0.0/24 via 10.17.4.1
+```
+
+- worker2
+
+```bash
+sudo ip route add 192.168.0.0/24 via 10.17.4.1
+```
+
+- worker3
+
+```bash
+sudo ip route add 192.168.0.0/24 via 10.17.4.1
+```
