@@ -65,6 +65,7 @@ Crea un archivo llamado `configurar_rutas.yml` con el siguiente contenido:
       vars:
         gateway: 10.17.4.1
 ```
+
 ## Paso 4: Ejecutar el Playbook
 
 Ejecuta el playbook con el siguiente comando desde el servidor ProLiant DL380 G7:
