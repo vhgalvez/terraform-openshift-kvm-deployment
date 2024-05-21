@@ -66,4 +66,36 @@ resource "libvirt_volume" "vm_disk" {
   for_each = var.vm_rockylinux_definitions
 
   name           = "${each.key}-${var.cluster_name}.qcow2"
-  base_volume_id = libvirt_volume
+  base_volume_id = libvirt_volume.rocky9_image.id
+  pool           = libvirt_pool.volumetmp_nat_02.name
+  format         = "qcow2"
+}
+
+resource "libvirt_domain" "vm_nat_02" {
+  for_each = var.vm_rockylinux_definitions
+
+  name   = each.key
+  memory = each.value.memory
+  vcpu   = each.value.cpus
+
+  network_interface {
+    network_id     = libvirt_network.kube_network_02.id
+    wait_for_lease = true
+    addresses      = [each.value.ip]
+  }
+
+  disk {
+    volume_id = libvirt_volume.vm_disk[each.key].id
+  }
+
+  cloudinit = libvirt_cloudinit_disk.vm_cloudinit[each.key].id
+
+  graphics {
+    type        = "vnc"
+    listen_type = "address"
+  }
+
+  cpu {
+    mode = "host-passthrough"
+  }
+}
