@@ -1,4 +1,3 @@
-# vars.tf
 variable "ssh_keys" {
   description = "SSH keys for the VMs"
   type        = list(string)
@@ -18,23 +17,28 @@ variable "rocky9_image" {
   description = "Path to the Rocky Linux 9 image"
   type        = string
 }
+
 variable "rocky9_network_name" {
   description = "The network name for the VMs"
   type        = string
 }
+
 variable "timezone" {
   description = "Timezone for the infrastructure"
   type        = string
   default     = "Europe/London"
 }
+
 variable "gateway" {
   description = "Gateway for the VMs"
   type        = string
 }
+
 variable "dns1" {
   description = "Primary DNS server"
   type        = string
 }
+
 variable "dns2" {
   description = "Secondary DNS server"
   type        = string

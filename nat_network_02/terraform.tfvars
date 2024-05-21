@@ -43,6 +43,7 @@ vm_rockylinux_definitions = {
 
 cluster_name   = "cluster_cefaslocalserver"
 cluster_domain = "cefaslocalserver.com"
+rocky9_network_name = "kube_network_02"
 gateway        = "10.17.3.1"
 dns1           = "8.8.8.8"
 dns2           = "8.8.4.4"
