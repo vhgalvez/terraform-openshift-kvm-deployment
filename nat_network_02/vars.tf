@@ -27,7 +27,7 @@ variable "timezone" {
   type        = string
   default     = "Europe/London"
 }
-variable  "gateway" {
+variable "gateway" {
   description = "Gateway for the VMs"
   type        = string
 }
