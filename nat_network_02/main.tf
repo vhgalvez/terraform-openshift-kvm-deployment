@@ -1,4 +1,23 @@
 # nat_network_02/main.tf
+terraform {
+  required_version = ">= 0.13"
+
+  required_providers {
+    libvirt = {
+      source  = "dmacvicar/libvirt"
+      version = "0.7.0"
+    }
+    template = {
+      source  = "hashicorp/template"
+      version = "~> 2.2.0"
+    }
+  }
+}
+
+provider "libvirt" {
+  uri = "qemu:///system"
+}
+
 resource "libvirt_network" "kube_network_02" {
   name      = "kube_network_02"
   mode      = "nat"
@@ -33,9 +52,9 @@ data "template_file" "vm_configs" {
 resource "libvirt_cloudinit_disk" "vm_cloudinit" {
   for_each = var.vm_rockylinux_definitions
 
-  name      = "${each.key}_cloudinit.iso"
-  pool      = libvirt_pool.volumetmp_nat_02.name
-  user_data = data.template_file.vm_configs[each.key].rendered
+  name           = "${each.key}_cloudinit.iso"
+  pool           = libvirt_pool.volumetmp_nat_02.name
+  user_data      = data.template_file.vm_configs[each.key].rendered
   network_config = templatefile("${path.module}/config/network-config.tpl", {
     ip      = each.value.ip,
     gateway = var.gateway,
