@@ -1,3 +1,4 @@
+# nat_network_03/main.tf
 terraform {
   required_version = ">= 0.13"
 
@@ -47,12 +48,11 @@ data "template_file" "vm-configs" {
   template = file("${path.module}/configs/machine-${each.key}-config.yaml.tmpl")
 
   vars = {
-    ssh_keys  = jsonencode(var.ssh_keys),
-    name      = each.key,
-    host_name = "${each.key}.${var.cluster_name}.${var.cluster_domain}",
-    gateway   = var.gateway,
-    dns1      = var.dns1,
-    dns2      = var.dns2
+    ssh_keys     = jsonencode(var.ssh_keys),
+    name         = each.key,
+    host_name    = "${each.key}.${var.cluster_name}.${var.cluster_domain}",
+    strict       = true,
+    pretty_print = true
   }
 }
 

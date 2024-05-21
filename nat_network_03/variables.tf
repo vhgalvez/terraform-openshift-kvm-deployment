@@ -28,3 +28,18 @@ variable "cluster_domain" {
   description = "Domain name of the cluster"
   type        = string
 }
+
+variable "gateway" {
+  description = "Gateway IP address"
+  type        = string
+}
+
+variable "dns1" {
+  description = "Primary DNS server"
+  type        = string
+}
+variable "dns2" {
+  description = "Secondary DNS server"
+  type        = string
+
+}
