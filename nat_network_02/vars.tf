@@ -27,6 +27,18 @@ variable "timezone" {
   type        = string
   default     = "Europe/London"
 }
+variable  "gateway" {
+  description = "Gateway for the VMs"
+  type        = string
+}
+variable "dns1" {
+  description = "Primary DNS server"
+  type        = string
+}
+variable "dns2" {
+  description = "Secondary DNS server"
+  type        = string
+}
 
 variable "vm_rockylinux_definitions" {
   description = "Definitions of virtual machines including CPU and memory configuration"
