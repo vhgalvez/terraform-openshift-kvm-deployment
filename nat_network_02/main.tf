@@ -18,13 +18,10 @@ provider "libvirt" {
 }
 
 resource "libvirt_network" "kube_network_02" {
-  name      = var.rocky9_network_name
+  name      = "kube_network_02"
   mode      = "nat"
   autostart = true
   addresses = ["10.17.3.0/24"]
-  dhcp {
-    enabled = true
-  }
 }
 
 resource "libvirt_pool" "volumetmp_nat_02" {
@@ -47,22 +44,20 @@ data "template_file" "vm-configs" {
   vars = {
     ssh_keys = jsonencode(var.ssh_keys),
     hostname = each.key,
-    timezone = var.timezone
+    timezone = var.timezone,
+    ip       = each.value.ip,
+    gateway  = var.gateway,
+    dns1     = var.dns1,
+    dns2     = var.dns2
   }
 }
 
 resource "libvirt_cloudinit_disk" "vm_cloudinit" {
   for_each = var.vm_rockylinux_definitions
 
-  name           = "${each.key}_cloudinit.iso"
-  pool           = libvirt_pool.volumetmp_nat_02.name
-  user_data      = data.template_file.vm-configs[each.key].rendered
-  network_config = templatefile("${path.module}/config/network-config.tpl", {
-    ip      = each.value.ip,
-    gateway = var.gateway,
-    dns1    = var.dns1,
-    dns2    = var.dns2
-  })
+  name      = "${each.key}_cloudinit.iso"
+  pool      = libvirt_pool.volumetmp_nat_02.name
+  user_data = data.template_file.vm-configs[each.key].rendered
 }
 
 resource "libvirt_volume" "vm_disk" {
@@ -78,7 +73,7 @@ resource "libvirt_domain" "vm_nat_02" {
   for_each = var.vm_rockylinux_definitions
 
   name   = each.key
-  memory = each.value.memory
+  memory = each.value.domain_memory
   vcpu   = each.value.cpus
 
   network_interface {
@@ -91,12 +86,12 @@ resource "libvirt_domain" "vm_nat_02" {
     volume_id = libvirt_volume.vm_disk[each.key].id
   }
 
-  cloudinit = libvirt_cloudinit_disk.vm_cloudinit[each.key].id
-
   graphics {
     type        = "vnc"
     listen_type = "address"
   }
+
+  cloudinit = libvirt_cloudinit_disk.vm_cloudinit[each.key].id
 
   cpu {
     mode = "host-passthrough"
