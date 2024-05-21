@@ -54,4 +54,3 @@ timezone = "Europe/London"
 gateway  = "10.17.3.1"
 dns1     = "8.8.8.8"
 dns2     = "8.8.4.4"
-
