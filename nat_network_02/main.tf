@@ -1,3 +1,4 @@
+# nat_network_02/main.tf
 resource "libvirt_network" "kube_network_02" {
   name      = "kube_network_02"
   mode      = "nat"
@@ -23,8 +24,8 @@ data "template_file" "vm_configs" {
 
   template = file("${path.module}/config/${each.key}-user-data.tpl")
   vars = {
-    ssh_keys = jsonencode(var.ssh_keys)
-    hostname = each.value.hostname
+    ssh_keys = jsonencode(var.ssh_keys),
+    hostname = each.value.hostname,
     timezone = var.timezone
   }
 }
@@ -36,9 +37,9 @@ resource "libvirt_cloudinit_disk" "vm_cloudinit" {
   pool      = libvirt_pool.volumetmp_nat_02.name
   user_data = data.template_file.vm_configs[each.key].rendered
   network_config = templatefile("${path.module}/config/network-config.tpl", {
-    ip      = each.value.ip
-    gateway = var.gateway
-    dns1    = var.dns1
+    ip      = each.value.ip,
+    gateway = var.gateway,
+    dns1    = var.dns1,
     dns2    = var.dns2
   })
 }
@@ -56,7 +57,7 @@ resource "libvirt_domain" "vm_nat_02" {
   for_each = var.vm_rockylinux_definitions
 
   name   = each.key
-  memory = each.value.domain_memory
+  memory = each.value.memory
   vcpu   = each.value.cpus
 
   network_interface {
@@ -69,12 +70,12 @@ resource "libvirt_domain" "vm_nat_02" {
     volume_id = libvirt_volume.vm_disk[each.key].id
   }
 
+  cloudinit = libvirt_cloudinit_disk.vm_cloudinit[each.key].id
+
   graphics {
     type        = "vnc"
     listen_type = "address"
   }
-
-  cloudinit = libvirt_cloudinit_disk.vm_cloudinit[each.key].id
 
   cpu {
     mode = "host-passthrough"

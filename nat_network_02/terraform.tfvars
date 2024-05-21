@@ -1,3 +1,4 @@
+# nat_network_02\terraform.tfvars
 rocky9_image = "/var/lib/libvirt/images/rocky_image/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2"
 
 vm_rockylinux_definitions = {
