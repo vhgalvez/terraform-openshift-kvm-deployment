@@ -18,7 +18,7 @@ provider "libvirt" {
 }
 
 resource "libvirt_network" "kube_network_02" {
-  name      = "kube_network_02"
+  name      = var.rocky9_network_name
   mode      = "nat"
   autostart = true
   addresses = ["10.17.3.0/24"]
@@ -51,9 +51,9 @@ data "template_file" "vm_configs" {
 resource "libvirt_cloudinit_disk" "vm_cloudinit" {
   for_each = var.vm_rockylinux_definitions
 
-  name           = "${each.key}_cloudinit.iso"
-  pool           = libvirt_pool.volumetmp_nat_02.name
-  user_data      = data.template_file.vm_configs[each.key].rendered
+  name      = "${each.key}_cloudinit.iso"
+  pool      = libvirt_pool.volumetmp_nat_02.name
+  user_data = data.template_file.vm_configs[each.key].rendered
   network_config = templatefile("${path.module}/config/network-config.tpl", {
     ip      = each.value.ip,
     gateway = var.gateway,
@@ -75,7 +75,7 @@ resource "libvirt_domain" "vm_nat_02" {
   for_each = var.vm_rockylinux_definitions
 
   name   = each.key
-  memory = each.value.memory
+  memory = each.value.domain_memory
   vcpu   = each.value.cpus
 
   network_interface {
