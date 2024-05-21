@@ -22,6 +22,9 @@ resource "libvirt_network" "kube_network_02" {
   mode      = "nat"
   autostart = true
   addresses = ["10.17.3.0/24"]
+  dhcp {
+    enabled = true
+  }
 }
 
 resource "libvirt_pool" "volumetmp_nat_02" {
@@ -75,7 +78,7 @@ resource "libvirt_domain" "vm_nat_02" {
   for_each = var.vm_rockylinux_definitions
 
   name   = each.key
-  memory = each.value.domain_memory
+  memory = each.value.memory
   vcpu   = each.value.cpus
 
   network_interface {
@@ -88,12 +91,12 @@ resource "libvirt_domain" "vm_nat_02" {
     volume_id = libvirt_volume.vm_disk[each.key].id
   }
 
+  cloudinit = libvirt_cloudinit_disk.vm_cloudinit[each.key].id
+
   graphics {
     type        = "vnc"
     listen_type = "address"
   }
-
-  cloudinit = libvirt_cloudinit_disk.vm_cloudinit[each.key].id
 
   cpu {
     mode = "host-passthrough"
