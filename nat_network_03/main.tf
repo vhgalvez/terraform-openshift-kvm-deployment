@@ -1,3 +1,4 @@
+# nat_network_03\main.tf
 terraform {
   required_version = ">= 0.13"
 
