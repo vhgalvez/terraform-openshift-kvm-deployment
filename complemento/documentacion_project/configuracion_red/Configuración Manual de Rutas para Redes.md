@@ -66,3 +66,15 @@ default via 192.168.0.1 dev eth0 proto static metric 100
 192.168.0.0/24 dev eth0 proto kernel scope link src 192.168.0.20 metric 100
 Conclusión
 Estas configuraciones manuales de rutas permiten que las máquinas virtuales en las diferentes redes (bridge y NAT) se comuniquen correctamente entre sí. Esta configuración es esencial para asegurar una correcta conectividad en el entorno cefaslocalserver.com.
+
+
+
+# En bastion1
+sudo ip route add 10.17.3.0/24 via 192.168.0.42
+sudo ip route add 10.17.4.0/24 via 192.168.0.42
+
+# En bootstrap1
+sudo ip route add 10.17.4.0/24 via 192.168.0.42
+
+# En freeipa1
+sudo ip route add 10.17.3.0/24 via 192.168.0.42
