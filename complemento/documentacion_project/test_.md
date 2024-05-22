@@ -79,6 +79,10 @@ sudo ip route
 hostnamectl
 sudo firewall-cmd --list-all-zones
 
+sudo iptables-save | sudo tee /etc/iptables/rules.v4
+
+sudo systemctl disable iptables-restore.service
+
 
 
 

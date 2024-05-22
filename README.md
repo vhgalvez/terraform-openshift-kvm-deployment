@@ -395,6 +395,20 @@ Estas interfaces se utilizan para la comunicación y conectividad de la red, inc
 | kube_network_03 | `worker3`    | 10.17.4.26   | Ejecución de aplicaciones  | (Virtual - NAT) |
 
 
+## Tabla de Configuración de Redes - br0 - Bridge Network
+
+| Nombre   | Dirección IP    |
+|----------|-----------------|
+| enp3s0f1 | 192.168.0.52/24 | 
+| enp4s0f0 | 192.168.0.18/24 | 
+| enp4s0f1 | 192.168.0.35/24 |
+| virbro   | 10.17.3.1/24    |
+| virbr1   | 10.17.4.1/24    |
+
+
+
+
+
 ## Maquinas Virtuales funcionando
 
 ![sudo virsh list --](https://github.com/vhgalvez/terraform-openshift-kvm-deployment/blob/4f16ea5ee7688d1d5b3a1611792ffaca2526c88b/complemento/image/mv_server.png "width=200 height=150")
