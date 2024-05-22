@@ -37,10 +37,15 @@ resource "libvirt_volume" "rocky9_image" {
 data "template_file" "vm_configs" {
   for_each = var.vm_rockylinux_definitions
 
-  template = file("${path.module}/config/bastion1-user-data.tpl")
+  template = file("${path.module}/config/${each.key}-user-data.tpl")
   vars = {
-    ssh_keys = jsonencode(var.ssh_keys)
-    hostname = each.value.hostname
+    ssh_keys = jsonencode(var.ssh_keys),
+    hostname = each.value.hostname,
+    timezone = var.timezone,
+    ip       = each.value.ip,
+    gateway  = each.value.gateway,
+    dns1     = each.value.dns1,
+    dns2     = each.value.dns2
   }
 }
 
@@ -51,9 +56,9 @@ resource "libvirt_cloudinit_disk" "vm_cloudinit" {
   pool      = libvirt_pool.volumetmp_bastion.name
   user_data = data.template_file.vm_configs[each.key].rendered
   network_config = templatefile("${path.module}/config/network-config.tpl", {
-    ip      = each.value.ip
-    gateway = each.value.gateway
-    dns1    = each.value.dns1
+    ip      = each.value.ip,
+    gateway = each.value.gateway,
+    dns1    = each.value.dns1,
     dns2    = each.value.dns2
   })
 }
