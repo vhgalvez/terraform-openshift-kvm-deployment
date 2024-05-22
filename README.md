@@ -306,9 +306,9 @@ Estas interfaces se utilizan para la comunicación y conectividad de la red, inc
 
 - **Switch**: TP-Link LS1008G - 8 puertos Gigabit no administrados
 - **Router WiFi**: Conexión fibra óptica, 600 Mbps de subida/bajada, IP pública
-- **Red**: Configurada con Open vSwitch para manejo avanzado y políticas de red
+- **Red**: Configurada red NAT y red Bridge de kvm
 - **VPN**: WireGuard para acceso seguro ssh administrado por Bastion Node
-  
+- 
 ## Redes Virtuales y Configuración
 
 ## Tabla de Configuración de Redes - br0 - Bridge Network
@@ -406,6 +406,34 @@ Estas interfaces se utilizan para la comunicación y conectividad de la red, inc
 | virbr1   | 10.17.4.1/24    |
 
 
+
+```hcl
+# Red br0 - Bridge Network - Rocky Linux 9.3
+resource "libvirt_network" "br0" {
+  name      = var.rocky9_network_name
+  mode      = "bridge"
+  bridge    = "br0"
+  autostart = true
+  addresses = ["192.168.0.0/24"]
+}
+
+
+# Red kube_network_02 - NAT Network
+resource "libvirt_network" "kube_network_02" {
+  name      = "kube_network_02"
+  mode      = "nat"
+  autostart = true
+  addresses = ["10.17.3.0/24"]
+}
+
+# Red kube_network_03 - NAT Network
+resource "libvirt_network" "kube_network_03" {
+  name      = "kube_network_03"
+  mode      = "nat"
+  autostart = true
+  addresses = ["10.17.4.0/24"]
+}
+```
 
 
 
