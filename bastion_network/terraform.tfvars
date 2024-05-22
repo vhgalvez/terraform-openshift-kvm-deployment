@@ -1,4 +1,3 @@
-# terraform.tfvars
 rocky9_image = "/var/lib/libvirt/images/rocky_image/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2"
 vm_rockylinux_definitions = {
   "bastion1" = {
@@ -8,10 +7,10 @@ vm_rockylinux_definitions = {
     volume_format = "qcow2",
     volume_pool   = "default",
     volume_size   = "32212254720", # 30GB
-    hostname      = "bastion1"
-    ip            = "192.168.0.20"
-    gateway       = "192.168.0.1"
-    dns1          = "8.8.8.8"
+    hostname      = "bastion1",
+    ip            = "192.168.0.20",
+    gateway       = "192.168.0.1",
+    dns1          = "8.8.8.8",
     dns2          = "8.8.4.4"
   }
 }

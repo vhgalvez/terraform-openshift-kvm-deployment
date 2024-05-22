@@ -1,5 +1,3 @@
-# bastion_network/main.tf
-
 terraform {
   required_version = "= 1.8.3"
 
@@ -73,7 +71,7 @@ resource "libvirt_volume" "vm_disk" {
 resource "libvirt_domain" "vm" {
   for_each = var.vm_rockylinux_definitions
 
-  name   = each.key
+  name   = each.value.hostname
   memory = each.value.memory
   vcpu   = each.value.cpus
 
