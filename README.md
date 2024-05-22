@@ -315,7 +315,7 @@ Estas interfaces se utilizan para la comunicación y conectividad de la red, inc
 
 | Red NAT | Nodos    | Dirección IP | Rol del Nodo                               | Interfaz de Red |
 | ------- | -------- | ------------ | ------------------------------------------ | --------------- |
-| br0     | bastion1 | 192.168.0.35 | Acceso seguro, Punto de conexión de bridge | `enp3s0f1`      |
+| br0     | bastion1 | 192.168.0.20 | Acceso seguro, Punto de conexión de bridge | `enp3s0f1`      |
 
 ## Tabla de Configuración de Redes - kube_network_02 - NAT Network
 
@@ -372,7 +372,7 @@ Estas interfaces se utilizan para la comunicación y conectividad de la red, inc
 
 | Red NAT | Nodos      | Dirección IP | Rol del Nodo                               | Interfaz de Red |
 | ------- | ---------- | ------------ | ------------------------------------------ | --------------- |
-| br0     | `bastion1` | 192.168.0.35 | Acceso seguro, Punto de conexión de bridge | `enp3s0f1`      |
+| br0     | `bastion1` | 192.168.0.20 | Acceso seguro, Punto de conexión de bridge | `enp3s0f1`      |
 
 ### Tabla de Configuración de Redes - kube_network_02
 
