@@ -1,4 +1,5 @@
 Configuración de un Puente de Red en Rocky Linux
+
 Introducción
 Este documento detalla los pasos para configurar un puente de red en un servidor Rocky Linux. El puente permitirá que las máquinas virtuales (VMs) se comuniquen entre sí y con redes externas, utilizando un enfoque centralizado y eficiente.
 
