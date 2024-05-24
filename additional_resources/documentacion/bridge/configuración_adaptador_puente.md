@@ -102,8 +102,6 @@ method=auto
 method=ignore
 ```
 
-
-
 ### Paso 3: Crear el archivo de configuración para la interfaz esclava
 
 Usa el segundo UUID generado para crear otro archivo en `/etc/NetworkManager/system-connections/` con el nombre `bridge-slave-enp3s0f0.nmconnection` y el siguiente contenid
@@ -117,16 +115,13 @@ interface-name=enp3s0f0
 master=br0
 slave-type=bridge
 ```
-
 ### Paso 4: Reiniciar NetworkManager
-
 
 Para aplicar las configuraciones, reinicia NetworkManager:
     
 ```bash
 sudo systemctl restart NetworkManager
 ```
-
 
 ### Paso 5: Activar las conexiones
 
@@ -136,7 +131,6 @@ Para activar el puente y la conexión esclava, ejecuta:
 sudo nmcli connection up br0
 sudo nmcli connection up bridge-slave-enp3s0f0
 ```
-
 
 ### Paso 6: Verificar el estado del puente
 
@@ -149,11 +143,7 @@ ip addr show br0
 sudo brctl show
 ```
 
-
 ![Verificar el estado del puente](file:///C:/Users/vhgal/Documents/desarrollo/IaC/cluster_openshift/terraform-openshift-kvm-deployment/additional_resources/image/bridge_configuration.png)
-
-
-
 
 ## Configuración de un Adaptador Puente (Bridge) en Rocky Linux KVM con Libvirt y Terraform
 
