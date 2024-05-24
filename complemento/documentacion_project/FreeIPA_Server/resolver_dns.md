@@ -1,3 +1,5 @@
+# Configuración de DNS en Rocky Linux y Flatcar Linux
+
 Aquí tienes una guía paso a paso para configurar la resolución de DNS manualmente en tus máquinas virtuales, tanto para Rocky Linux como para Flatcar Linux. Esta guía cubre cómo actualizar el archivo resolv.conf y configurar NetworkManager en cada sistema operativo.
 
 Configuración de DNS en Rocky Linux
