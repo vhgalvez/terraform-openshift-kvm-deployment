@@ -42,20 +42,7 @@ Agrega la dirección IP y el nombre de dominio al archivo `/etc/hosts`:
 echo "10.17.3.17  dns.cefaslocalserver.com ipa" | sudo tee -a /etc/hosts
 ```
 
-## Detalles Técnicos del Clúster
 
-| Componente       | CPUs | Memoria (MB) | Descripción                |
-|------------------|------|--------------|----------------------------|
-| Bootstrap Node   | 1    | 1024         | Inicializa el clúster      |
-| Master Nodes     | 2    | 2048         | Gestión del clúster        |
-| Worker Nodes     | 2    | 2048         | Ejecución de aplicaciones  |
-| FreeIPA          | 1    | 1024         | Gestión de identidades     |
-| Load Balancer    | 1    | 1024         | Distribución de carga      |
-| NFS              | 1    | 1024         | Almacenamiento de archivos |
-| PostgreSQL       | 1    | 1024         | Gestión de bases de datos  |
-| Bastion Node     | 1    | 1024         | Acceso seguro al clúster   |
-| Elasticsearch    | 2    | 2048         | Análisis de logs           |
-| Kibana           | 1    | 1024         | Visualización de datos     |
 
 ### Especificaciones del Servidor Físico
 
@@ -97,7 +84,6 @@ echo "10.17.3.17  dns.cefaslocalserver.com ipa" | sudo tee -a /etc/hosts
 | enp3s0f1  | 192.168.0.25   | 255.255.255.0   | 192.168.0.255   |
 | enp4s0f0  | 192.168.0.20   | 255.255.255.0   | 192.168.0.255   |
 | enp4s0f1  | 192.168.0.26   | 255.255.255.0   | 192.168.0.255   |
-| lo        | 127.0.0.1      | 255.0.0.0       | N/A             |
 
 ## Disk Configuration
 
@@ -131,36 +117,3 @@ echo "10.17.3.17  dns.cefaslocalserver.com ipa" | sudo tee -a /etc/hosts
 | /dev/mapper/rl-home| 3.0T   | 25G    | ~3.0T     | 1%   | /home      |
 
 This configuration provides a detailed view of the system setup, ensuring all elements are concisely documented for effective cluster management.
-
-# Configuración de Máquinas Virtuales en CEFAS Local Server
-
-## Red NAT con IPs Fijas y Nombres de Dominio Asignados
-
-| Máquina          | CPU (cores) | Memoria (MB) | IP          | Dominio                               |
-|------------------|-------------|--------------|-------------|---------------------------------------|
-| **Bootstrap1**   | 1           | 1024         | 10.17.3.10  | bootstrap.cefaslocalserver.com       |
-| **Master1**      | 2           | 2048         | 10.17.3.11  | master1.cefaslocalserver.com         |
-| **Master2**      | 2           | 2048         | 10.17.3.12  | master2.cefaslocalserver.com         |
-| **Master3**      | 2           | 2048         | 10.17.3.13  | master3.cefaslocalserver.com         |
-| **Worker1**      | 2           | 2048         | 10.17.3.14  | worker1.cefaslocalserver.com         |
-| **Worker2**      | 2           | 2048         | 10.17.3.15  | worker2.cefaslocalserver.com         |
-| **Worker3**      | 2           | 2048         | 10.17.3.16  | worker3.cefaslocalserver.com         |
-| **FreeIPA1**     | 1           | 1024         | 10.17.3.17  | dns.cefaslocalserver.com             |
-| **Load Balancer1** | 1        | 1024         | 10.17.3.18  | loadbalancer.cefaslocalserver.com    |
-| **NFS1**         | 1           | 1024         | 10.17.3.19  | nfs.cefaslocalserver.com             |
-| **PostgreSQL1**  | 1           | 1024         | 10.17.3.20  | postgresql.cefaslocalserver.com      |
-| **Bastion1**     | 1           | 1024         | 10.17.3.21  | bastion.cefaslocalserver.com         |
-| **Elasticsearch1** | 2        | 2048         | 10.17.3.22  | elasticsearch.cefaslocalserver.com   |
-| **Kibana1**      | 1           | 1024         | 10.17.3.23  | kibana.cefaslocalserver.com          |
-
-Este documento presenta la configuración técnica de cada máquina virtual establecida bajo el dominio `cefaslocalserver.com`, proporcionando detalles sobre los recursos de hardware asignados y las direcciones IP fijas dentro de una red NAT.
-
-### Configuración de Red Virtualizada con Terraform
-
-```terraform
-resource "libvirt_network" "kube_network" {
-  name      = "kube_network"
-  mode      = "nat"
-  addresses = ["10.17.3.0/24"]
-}
-```
