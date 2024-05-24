@@ -25,6 +25,7 @@ sudo ip route add 10.17.3.0/24 via 192.168.0.42
 
 5. Verificar Conectividad
    
+   
 6. Después de recrear las máquinas, verifica la conectividad de la red y el estado de las configuraciones:
 
 Ping entre las máquinas: Verifica que las máquinas puedan comunicarse entre sí usando ping.

@@ -164,16 +164,30 @@ Esta guía debe ayudarte a configurar manualmente la resolución de DNS en tus m
 # Configuración de DNS en Rocky Linux
 
 ```bash
-10.17.4.20 bootstrap.serverlocalcefas.com
-10.17.4.21 master1.serverlocalcefas.com
-10.17.4.22 master2.serverlocalcefas.com
-10.17.4.23 master3.serverlocalcefas.com
-10.17.4.24 worker1.serverlocalcefas.com
-10.17.4.25 worker2.serverlocalcefas.com
-10.17.4.26 worker3.serverlocalcefas.com
-192.168.0.20 bastion.serverlocalcefas.com
-10.17.3.11 freeipa.serverlocalcefas.com
-10.17.3.12 lb.serverlocalcefas.com
-10.17.3.13 db.serverlocalcefas
-192.168.0.20 bastion1.serverlocalcefas.com
+10.17.4.20 bootstrap1.cefaslocalserver.com
+10.17.4.21 master1.cefaslocalserver.com
+10.17.4.22 master2.cefaslocalserver.com
+10.17.4.23 master3.cefaslocalserver.com
+10.17.4.24 worker1.cefaslocalserver.com
+10.17.4.25 worker2.cefaslocalserver.com
+10.17.4.26 worker3.cefaslocalserver.com
+192.168.0.20 bastion.cefaslocalserver.com
+10.17.3.11 freeipa.cefaslocalserver.com
+10.17.3.12 lb.cefaslocalserver.com
+10.17.3.13 db.cefaslocalserver.com
+192.168.0.20 bastion1.cefaslocalserver.com
 ```
+
+```bash
+10.17.4.20 bootstrap1.cefaslocalserver.com
+10.17.4.21 master1.cefaslocalserver.com
+10.17.4.22 master2.cefaslocalserver.com
+10.17.4.23 master3.cefaslocalserver.com
+10.17.4.24 worker1.cefaslocalserver.com
+10.17.4.25 worker2.cefaslocalserver.com
+10.17.4.26 worker3.cefaslocalserver.com
+192.168.0.20 bastion.cefaslocalserver.com
+10.17.3.11 freeipa.cefaslocalserver.com
+192.168.0.20 bastion1.cefaslocalserver.com
+```
+
