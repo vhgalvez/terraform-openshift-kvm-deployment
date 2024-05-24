@@ -149,7 +149,11 @@ ip addr show br0
 sudo brctl show
 ```
 
-image/adaptador_puente_(bridge).md-bridge_rocky_linux_kvm-libvirt_terraform.png
+
+![Verificar el estado del puente](file:///C:/Users/vhgal/Documents/desarrollo/IaC/cluster_openshift/terraform-openshift-kvm-deployment/additional_resources/image/bridge_configuration.png)
+
+
+
 
 ## Configuración de un Adaptador Puente (Bridge) en Rocky Linux KVM con Libvirt y Terraform
 
