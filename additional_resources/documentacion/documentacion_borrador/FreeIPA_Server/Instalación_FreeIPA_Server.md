@@ -4,7 +4,7 @@ Este documento proporciona una guía paso a paso para la instalación y configur
 
 Prerrequisitos
 
-Sistema Operativo: Rocky Linux 9.3 Minimal.
+Sistema Operativo: Rocky Linux.
 
 Acceso Root: Asegúrate de tener privilegios de superusuario (root).
 

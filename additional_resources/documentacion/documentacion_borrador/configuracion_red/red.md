@@ -153,27 +153,8 @@ sudo ip route add 10.17.4.0/24 via 192.168.0.42
 Verificación de la Conectividad
 
 1. Verificar Conectividad con Pings
-Desde bastion1:
-
-```bash
-ping -c 2 192.168.0.20
-ping -c 2 10.17.4.20
-ping -c 2 10.17.3.11
-ping -c 2 10.17.4.1
-ping -c 2 10.17.3.1
-ping -c 2 8.8.8.8
-Desde bootstrap1:
-```
-
-```bash
-ping -c 2 192.168.0.20
-ping -c 2 10.17.4.20
-ping -c 2 10.17.3.11
-ping -c 2 10.17.4.1
-ping -c 2 10.17.3.1
-ping -c 2 8.8.8.8
-Desde freeipa1:
-```
+   
+- Desde bastion1:
 
 ```bash
 ping -c 2 192.168.0.20
@@ -184,7 +165,28 @@ ping -c 2 10.17.3.1
 ping -c 2 8.8.8.8
 ```
 
-2. Verificar la Configuración de Red y Rutas
+- Desde bootstrap1:
+
+```bash
+ping -c 2 192.168.0.20
+ping -c 2 10.17.4.20
+ping -c 2 10.17.3.11
+ping -c 2 10.17.4.1
+ping -c 2 10.17.3.1
+ping -c 2 8.8.8.8
+```
+- Desde freeipa1:
+
+```bash
+ping -c 2 192.168.0.20
+ping -c 2 10.17.4.20
+ping -c 2 10.17.3.11
+ping -c 2 10.17.4.1
+ping -c 2 10.17.3.1
+ping -c 2 8.8.8.8
+```
+
+1. Verificar la Configuración de Red y Rutas
 Verificar direcciones IP:
 
 ```bash
