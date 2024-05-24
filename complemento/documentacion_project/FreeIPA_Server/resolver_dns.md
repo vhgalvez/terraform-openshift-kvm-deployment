@@ -109,6 +109,7 @@ nslookup master1.localcefas.com
 Si la configuración es correcta, deberías ver la dirección IP correspondiente al nombre de host.
 
 Resumen de los Hostnames e IPs
+
 bootstrap.localcefas.com - 10.17.4.20
 master1.localcefas.com - 10.17.4.21
 master2.localcefas.com - 10.17.4.22
@@ -121,4 +122,5 @@ freeipa.localcefas.com - 10.17.3.11
 lb.localcefas.com - 10.17.3.12
 db.localcefas.com - 10.17.3.13
 bastion1.localcefas.com - 192.168.0.20
+
 Esta guía debe ayudarte a configurar manualmente la resolución de DNS en tus máquinas virtuales Rocky Linux y Flatcar Linux.
