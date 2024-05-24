@@ -50,8 +50,8 @@ ip addr
 Configurar las rutas estáticas:
 
 ```bash
-sudo ip route add 10.17.3.0/24 via 192.168.0.42
-sudo ip route add 10.17.4.0/24 via 192.168.0.42
+sudo ip route add 10.17.3.0/24 via 192.168.0.20
+sudo ip route add 10.17.4.0/24 via 192.168.0.20
 ```
 Verificar la configuración de rutas:
 
@@ -100,6 +100,7 @@ resource "libvirt_network" "br0" {
   addresses = ["192.168.0.0/24"]
 }
 ```
+
 # Red kube_network_02 - NAT Network
 
 ```hcl
@@ -208,6 +209,7 @@ COMMIT
 
 COMMIT
 ```
+
 Habilitar y Arrancar el Servicio iptables
 
 Recargar los archivos de configuración del sistema:
@@ -215,6 +217,7 @@ Recargar los archivos de configuración del sistema:
 ```bash
 sudo systemctl daemon-reload
 ```
+
 Habilitar el servicio iptables para que se inicie al arranque:
 
 
@@ -272,17 +275,21 @@ ping -c 2 10.17.3.11
 ping -c 2 10.17.4.1
 ping -c 2 10.17.3.1
 ping -c 2 8.8.8.8
+```
+
 Desde bootstrap1:
-```
+
 ```bash
-ping -c 2 192.168.0.20
-ping -c 2 10.17.4.20
-ping -c 2 10.17.3.11
-ping -c 2 10.17.4.1
-ping -c 2 10.17.3.1
-ping -c 2 8.8.8.8
+ping -c 4 192.168.0.20
+ping -c 4 10.17.4.20
+ping -c 4 10.17.3.11
+ping -c 4 10.17.4.1
+ping -c 4 10.17.3.1
+ping -c 4 8.8.8.8
+```
+
 Desde freeipa1:
-```
+
 ```bash
 ping -c 2 192.168.0.20
 ping -c 2 10.17.4.20
@@ -290,7 +297,12 @@ ping -c 2 10.17.3.11
 ping -c 2 10.17.4.1
 ping -c 2 10.17.3.1
 ping -c 2 8.8.8.8
+sudo ip route
+ip addr
+hostnamectl
+
 ```
+
 Verificar la Configuración de Red y Rutas
 
 Verificar direcciones IP:
@@ -309,6 +321,28 @@ Verificar la información del sistema:
 hostnamectl
 ```
 
+```bash
+sudo chmod +x verificar_conectividad.sh
+```
 
-Conclusión
+```bash
+sudo ./verificar_conectividad.sh
+```
+
+
+
+
+# Conclusión
+
 Siguiendo estos pasos, hemos configurado con éxito el enrutamiento y las reglas de firewall para permitir la conectividad adecuada entre las diferentes redes en el entorno cefaslocalserver.com. Esta documentación proporciona una guía detallada para replicar esta configuración en otros entornos similares.
+
+
+ping -c 4 192.168.0.20
+ping -c 4 10.17.4.20
+ping -c 4 10.17.3.11
+ping -c 4 10.17.4.1
+ping -c 4 10.17.3.1
+ping -c 4 8.8.8.8
+sudo ip route
+ip addr
+hostnamectl

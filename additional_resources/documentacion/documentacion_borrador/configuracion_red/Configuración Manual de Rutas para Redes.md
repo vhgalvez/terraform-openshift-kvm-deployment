@@ -47,6 +47,7 @@ Añadir ruta para br0 (192.168.0.0/24)
 ```bash
 sudo ip route add 192.168.0.0/24 via 10.17.4.1
 ```
+
 Añadir ruta para kube_network_02 (10.17.3.0/24)
 
 ```bash
@@ -94,17 +95,7 @@ sudo ip route add 10.17.3.0/24 via 192.168.0.42
 sudo ip route add 10.17.4.0/24 via 192.168.0.42
 ```
 
-# En bootstrap1
 
-```bash
-sudo ip route add 10.17.4.0/24 via 192.168.0.42
-```
-
-# En freeipa1
-
-```bash
-sudo ip route add 10.17.3.0/24 via 192.168.0.42
-```
 
 Verificación de la Conectividad
 
@@ -179,3 +170,16 @@ sudo systemctl enable iptables
 sudo systemctl restart iptables
 sudo systemctl status iptables
 ```
+
+
+
+
+ping -c 4 192.168.0.20
+ping -c 4 10.17.4.20
+ping -c 4 10.17.3.11
+ping -c 4 10.17.4.1
+ping -c 4 10.17.3.1
+ping -c 4 8.8.8.8
+sudo ip route
+hostnamectl
+ip a
