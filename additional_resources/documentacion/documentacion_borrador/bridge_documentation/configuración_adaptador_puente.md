@@ -149,19 +149,9 @@ ip addr show br0
 sudo brctl show
 ```
 
-## Verificación de la Configuración
-
-Para verificar que el puente está configurado correctamente, puedes comprobar su estado con:
-
-```bash
-nmcli connection show
-nmcli device status
-ip addr show br0
-sudo brctl show
-```
-
 image/adaptador_puente_(bridge).md-bridge_rocky_linux_kvm-libvirt_terraform.png
 
+## Configuración de un Adaptador Puente (Bridge) en Rocky Linux KVM con Libvirt y Terraform
 
 ```hcl
 resource "libvirt_network" "br0" {
