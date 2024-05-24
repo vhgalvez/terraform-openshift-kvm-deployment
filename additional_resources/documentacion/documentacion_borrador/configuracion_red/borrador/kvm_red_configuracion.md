@@ -1,4 +1,4 @@
-Documentación Técnica para Configuración de Comunicación entre Redes NAT y una Red Bridge en KVM
+# Documentación Técnica para Configuración de Comunicación entre Redes NAT y una Red Bridge en KVM
 
 Este documento proporciona una guía detallada sobre cómo configurar la comunicación entre redes NAT y una red puente (bridge) en un entorno KVM. La configuración se realiza en un servidor KVM físico y sus máquinas virtuales (VMs).
 
@@ -36,6 +36,7 @@ Ejecuta el siguiente comando para aplicar los cambios:
 ```bash
 sudo sysctl -p
 ```
+
 1. Configurar el Enrutamiento entre las Redes
 
 Necesitarás agregar las reglas de enrutamiento necesarias para permitir la comunicación entre las redes NAT y la red bridge utilizando iptables.
@@ -43,6 +44,7 @@ Necesitarás agregar las reglas de enrutamiento necesarias para permitir la comu
 Paso 4: Agregar Reglas de Enrutamiento
 
 Configuración para nat_network_02
+
 En el servidor KVM físico:
 
 ```bash
@@ -102,14 +104,12 @@ Opción 2: Usar un Servicio de iptables
 Crear un archivo de servicio para iptables:
 
 ```bash
-
 sudo nano /etc/systemd/system/iptables-restore.service
 ```
 
 Añadir las siguientes líneas al archivo del servicio:
 
 ```ini
-
 [Unit]
 Description=Restore iptables rules
 Before=network-pre.target
@@ -127,7 +127,6 @@ WantedBy=multi-user.target
 Guardar el archivo y cargarlo en systemd:
 
 ```bash
-
 sudo systemctl daemon-reload
 sudo systemctl enable iptables-restore.service
 sudo systemctl start iptables-restore.service
@@ -141,9 +140,9 @@ Ejemplo en una Máquina Virtual en nat_network_02
 En la VM freeipa1:
 
 ```bash
-
 sudo ip route add 192.168.0.0/24 via 10.17.3.1
 ```
+
 Aquí, 10.17.3.1 es la puerta de enlace de la red NAT nat_network_02.
 
 Ejemplo en una Máquina Virtual en nat_network_03
@@ -151,9 +150,9 @@ Ejemplo en una Máquina Virtual en nat_network_03
 En la VM bootstrap1:
 
 ```bash
-
 sudo ip route add 192.168.0.0/24 via 10.17.4.1
 ```
+
 Aquí, 10.17.4.1 es la puerta de enlace de la red NAT nat_network_03.
 
 6. Verificar la Conectividad
@@ -161,13 +160,15 @@ Finalmente, verifica la conectividad entre las máquinas virtuales en las redes 
 
 Paso 8: Comprobar la Conexión
 Desde la VM freeipa1 en nat_network_02:
-```bash
 
+```bash
 ping 192.168.0.20
 ```
+
 Este comando debería hacer ping a la IP del nodo bastión bastion1 en la red bridge br0.
 
-Resumen
+# Resumen
+
 Para lograr la comunicación entre redes NAT y la red bridge (bridge) en tu entorno KVM, debes:
 
 Configurar correctamente la red bridge (br0).
@@ -252,7 +253,6 @@ Paso 1: Asegurar que la Red Bridge esté Configurada y Funcionando
 La red bridge (br0) debe estar configurada y operativa. En tu configuración de Terraform, esto se ha definido como:
 
 ```hcl
-
 # Red br0 - Bridge Network - Rocky Linux 9.3
 resource "libvirt_network" "br0" {
   name      = var.rocky9_network_name
