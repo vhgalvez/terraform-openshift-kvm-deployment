@@ -164,13 +164,8 @@ hostnamectl
 ```
 
 
-```bash
-sudo iptables-save | sudo tee /etc/sysconfig/iptables
-```
 
 
-# Guardar las reglas de iptables con permisos de superusuario
-sudo iptables-save | sudo tee /etc/sysconfig/iptables
 
 # Verificar que las reglas se hayan guardado correctamente
 sudo cat /etc/sysconfig/iptables
@@ -182,8 +177,8 @@ sudo systemctl restart iptables
 sudo iptables -L -n -v
 sudo iptables -t nat -L -n -v
 
-# Aplicar la configuración de Terraform nuevamente
-terraform apply
 
-# Verificación adicional si es necesario
-sudo journalctl -u libvirtd
+
+sudo systemctl enable iptables
+sudo systemctl restart iptables
+sudo systemctl status iptables
