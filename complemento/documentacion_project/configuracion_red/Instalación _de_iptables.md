@@ -1,9 +1,11 @@
-Instalación de iptables
+## Instalación de iptables
+
 Actualizar la lista de paquetes:
 
 bash
 Copiar código
 sudo dnf update -y
+
 Instalar iptables:
 
 bash
