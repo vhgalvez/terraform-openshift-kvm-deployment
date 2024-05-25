@@ -53,3 +53,28 @@ bash
 Copiar código
 ip route
 Estas configuraciones aseguran que las rutas se mantendrán a través de reinicios del sistema.
+
+# Elimina rutas incorrectas
+sudo ip route del 10.17.3.0/24 via 192.168.0.20 dev eth0
+sudo ip route del 10.17.4.0/24 via 192.168.0.20 dev eth0
+
+# Agrega rutas correctas
+sudo ip route add 10.17.3.0/24 via 192.168.0.1 dev eth0
+sudo ip route add 10.17.4.0/24 via 192.168.0.1 dev eth0
+
+# Verifica conectividad
+traceroute 10.17.4.20
+traceroute 10.17.3.13
+
+# Edita archivo de rutas persistentes
+echo "10.17.3.0/24 via 192.168.0.1 dev eth0" | sudo tee -a /etc/sysconfig/network-scripts/route-eth0
+echo "10.17.4.0/24 via 192.168.0.1 dev eth0" | sudo tee -a /etc/sysconfig/network-scripts/route-eth0
+
+# Reinicia la red para aplicar cambios
+sudo systemctl restart network
+
+
+
+# Agrega rutas en servidor hp
+sudo ip route add 10.17.3.0/24 dev virbr0
+sudo ip route add 10.17.4.0/24 dev virbr1
