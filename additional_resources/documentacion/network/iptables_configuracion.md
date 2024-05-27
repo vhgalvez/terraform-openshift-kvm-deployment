@@ -4,6 +4,7 @@
 Este documento detalla los pasos para configurar NAT y reenvío de tráfico en Rocky Linux 9. La configuración permite que las máquinas virtuales en las redes 10.17.3.0/24 y 10.17.4.0/24 accedan a Internet a través de la interfaz enp4s0f0.
 
 1. Configuración de Reenvío de IP
+
 Primero, asegúrate de que el reenvío de IP esté habilitado en el servidor:
 
 ```bash
@@ -22,7 +23,7 @@ Luego, recarga la configuración de sysctl para aplicar los cambios:
 sudo sysctl -p
 ```
 
-2. Configuración de iptables
+1. Configuración de iptables
 
    
 Edita el archivo de configuración de iptables en /etc/sysconfig/iptables y agrega las siguientes reglas:
@@ -99,7 +100,8 @@ sudo systemctl restart iptables
 ```
 
 3. Configuración de Rutas IP
-4. 
+
+
 Agrega las rutas necesarias en cada máquina virtual para garantizar la conectividad entre las subredes.
 
 # Bastion1
@@ -111,6 +113,7 @@ sudo ip route add default via 192.168.0.1 dev eth0 proto static metric 100
 ```
 
 # Agrega las rutas para las subredes 10.17.3.0/24 y 10.17.4.0/24 a través del gateway 192.168.0.21
+
 
 ```bash
 sudo ip route add 10.17.3.0/24 via 192.168.0.21 dev eth0
@@ -198,8 +201,7 @@ sudo ip route add default via 10.17.3.1 dev eth0 proto dhcp src 10.17.3.11 metri
 ```
 
 # Asegura la ruta de la subred 10.17.3.0/24
-    
-    
+
 ```bash
 sudo ip route add 10.17.3.0/24 dev eth0 proto kernel scope link src 10.17.3.11 metric 100
 ```
