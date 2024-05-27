@@ -279,7 +279,4 @@ ping -c 4 google.com
 dig google.com
 ```
 
-
 Con estos pasos documentados, podrás configurar y verificar NAT y reenvío de tráfico en un entorno de Rocky Linux 9, asegurando que las máquinas virtuales tengan acceso a Internet y puedan comunicarse entre sí a través de diferentes subredes.
-
-
