@@ -76,21 +76,32 @@ sudo systemctl restart iptables
 
 # Bootstrap1
 
+```bash
 sudo ip route add 10.17.3.0/24 via 10.17.4.1 dev eth0
 sudo ip route add 192.168.0.0/24 via 10.17.4.1 dev eth0
+```
 
 
 # FreeIPA1
 
+```bash
 sudo ip route add 10.17.4.0/24 via 10.17.3.1 dev eth0
 sudo ip route add 192.168.0.0/24 via 10.17.3.1 dev eth0
+```
 
 # Bastion1
 
+```bash
 sudo ip route add 10.17.3.0/24 via 192.168.0.21 dev eth0
 sudo ip route add 10.17.4.0/24 via 192.168.0.21 dev eth0
+```
 
+```bash
 sudo systemctl restart libvirtd
+
+
 sudo systemctl restart iptables
+
 sudo systemctl restart NetworkManager
+
 ```
