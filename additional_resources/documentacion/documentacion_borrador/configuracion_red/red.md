@@ -132,8 +132,8 @@ ip route
 Agregar rutas para las redes 10.17.3.0/24 y 10.17.4.0/24 vía 192.168.0.42:
 
 ```bash
-sudo ip route add 10.17.3.0/24 via 192.168.0.42
-sudo ip route add 10.17.4.0/24 via 192.168.0.42
+sudo ip route add 10.17.3.0/24 via 192.168.0.1
+sudo ip route add 10.17.4.0/24 via 192.168.0.1
 ```
 
 2. En los demás Servidores (bootstrap1, freeipa1)
@@ -146,8 +146,8 @@ ip route
 Agregar rutas si es necesario:
 
 ```bash
-sudo ip route add 10.17.3.0/24 via 192.168.0.42
-sudo ip route add 10.17.4.0/24 via 192.168.0.42
+sudo ip route add 10.17.3.0/24 via 192.168.0.1
+sudo ip route add 10.17.4.0/24 via 192.168.0.1
 ```
 
 Verificación de la Conectividad

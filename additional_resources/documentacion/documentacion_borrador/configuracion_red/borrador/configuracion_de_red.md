@@ -318,5 +318,7 @@ COMMIT
 -A LIBVIRT_PRT -s 10.17.3.0/24 ! -d 10.17.3.0/24 -p udp -j MASQUERADE --to-ports 1024-65535
 -A LIBVIRT_PRT -s 10.17.3.0/24 ! -d 10.17.3.0/24 -j MASQUERADE
 COMMIT
+
 # Completed on Wed May 22 20:19:36 2024
+
 [victory@server terraform-openshift-kvm-deployment]$
