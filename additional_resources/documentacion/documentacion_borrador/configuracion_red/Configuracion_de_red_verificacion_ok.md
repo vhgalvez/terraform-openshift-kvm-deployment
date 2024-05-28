@@ -105,3 +105,7 @@ sudo systemctl restart iptables
 sudo systemctl restart NetworkManager
 
 ```
+
+
+https://overthewire.org/wargames/bandit/
+https://linuxsurvival.com/
